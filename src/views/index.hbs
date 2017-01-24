@@ -1,0 +1,19 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>books</title>
+    </head>
+    <body>
+        <a href="/">Home</a>
+        <h1>List of books</h1>
+        <ul>
+            {{#each books}}
+                <li>
+                    <h2><img src="{{imgpath}}"></h2>
+                    <p>{{name}}</p>
+                </li>
+            {{/each}}
+            
+        </ul>
+    </body>
+</html>

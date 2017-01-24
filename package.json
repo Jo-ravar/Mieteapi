@@ -1,0 +1,25 @@
+{
+  "name": "booksdynamic",
+  "version": "1.0.0",
+  "description": "dynamic books",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "joravar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "deasync": "^0.1.9",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "gm": "^1.23.0",
+    "hbs": "^4.0.0",
+    "jsonwebtoken": "^7.2.1",
+    "mongoose": "^4.7.1",
+    "multer": "^1.2.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "shortid": "^2.2.6"
+  }
+}
