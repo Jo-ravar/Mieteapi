@@ -1,7 +1,7 @@
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var mongoose = require('mongoose');
-var db = 'mongodb://localhost:27017/img';
+//var db = 'mongodb://localhost:27017/img';
 //mongoose.connect(db);
 mongoose.connect(process.env.MONGODB_URI);
 require('./src/utilities/passport')(passport);
