@@ -22,6 +22,7 @@ router.route('/register')
     // Attempt to save the user
     newUser.save(function(err) {
       if (err) {
+          console.log("Error in signup "+JSON.stringify(err));
         return res.json({ success: false, message: 'That email address already exists.'});
       }
       res.json({ success: true, message: 'Successfully created new user.' });
@@ -35,7 +36,8 @@ router.route('/login')
  User.findOne({  email: req.body.email }, function (err, user) {
       if (err) { throw err; }
       else{
-        if (!user) {  res.send({ success: false, message: 'Authentication failed. User not found.' }); }
+        if (!user) {  
+           res.send({ success: false, message: 'Authentication failed. User not found.' }); }
       else{
         if (user.password !== req.body.password) { 
           res.send({ success: false, message: 'Authentication failed. Passwords did not match.' });
