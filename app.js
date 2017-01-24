@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 //var db = 'mongodb://localhost:27017/img';
 //mongoose.connect(db);
 mongoose.connect(process.env.MONGODB_URI);
+app.set('port', (process.env.PORT || 3000));
 require('./src/utilities/passport')(passport);
 var express = require('express');
 var app = express();
@@ -24,7 +25,7 @@ app.use('/books',bookRoute);
 app.use('/upload',uploadRoute);
 app.use('/api',apiRoute);
 
-app.listen(3000,function(err) {
+app.listen(app.get('port'),function(err) {
     if(!err)
     {
         console.log("server started at port 3000");
