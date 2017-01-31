@@ -9,6 +9,7 @@
   "author": "joravar",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.9.0",
     "body-parser": "^1.15.2",
     "deasync": "^0.1.9",
     "express": "^4.14.0",

@@ -6,13 +6,32 @@ var mongoose = require('mongoose');
 var fs = require("fs");
 var shortid = require('shortid');
 var passport = require('passport');
+var AWS=require('aws-sdk');
+var S3_BUCKET='mieteapp-123';
+AWS.config = new AWS.Config();
+AWS.config.accessKeyId = "AKIAISDNWLMQT4UKNLDA";
+AWS.config.secretAccessKey = "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";
+
+ 
 
 router.route('/')
      .post(passport.authenticate('jwt', { session: false }),function(req,res){
+         
+         var s3 = new AWS.S3();
+         var bodystream =   new Buffer(req.body.photo,'base64');
+            var uniqueRefno =  shortid.generate(); 
+             console.log(uniqueRefno);
+         var params = {
+         ACL: 'public-read',    
+        'Bucket': S3_BUCKET,
+        'Key': uniqueRefno+'.jpg',
+        'Body': bodystream,
+        'ContentEncoding': 'base64', 
+     };
 
-         var uniqueRefno =  shortid.generate(); 
-         console.log(uniqueRefno);
-fs.writeFile("public/images/uploads/"+uniqueRefno+".jpg", new Buffer(req.body.photo, 'base64')  , function(err,done) {
+ 
+      
+  s3.upload( params, function(err,data) {
      if(err)
      {
         
@@ -22,7 +41,8 @@ fs.writeFile("public/images/uploads/"+uniqueRefno+".jpg", new Buffer(req.body.ph
       
      else
      {
-          console.log("File created "); 
+        
+                 console.log("File created "); 
                  var newBook = new bookSchema();
                  newBook.name = req.body.name;
                  newBook.uniqueId=uniqueRefno;
@@ -33,7 +53,7 @@ fs.writeFile("public/images/uploads/"+uniqueRefno+".jpg", new Buffer(req.body.ph
                  newBook.gender=req.body.Gender;
                  newBook.advmoney=req.body.Advmoney;
                  newBook.location=req.body.Location;
-                 newBook.imgpath = "/images/uploads/"+uniqueRefno+".jpg";
+                 newBook.imgpath = "http://s3.amazonaws.com/mieteapp-123"+uniqueRefno+".jpg";
                  newBook.save(function (err, result) {
                   if (err) {
                              console.log("Error in insert " + JSON.stringify(err));
@@ -58,7 +78,7 @@ fs.writeFile("public/images/uploads/"+uniqueRefno+".jpg", new Buffer(req.body.ph
                           });
                         
                               }
-     });                                    
+     });                                  
      }
       
  });
@@ -67,8 +87,18 @@ fs.writeFile("public/images/uploads/"+uniqueRefno+".jpg", new Buffer(req.body.ph
 
 router.route('/edit')
  .post(passport.authenticate('jwt', { session: false }),function(req,res){
+    var s3 = new AWS.S3();
+    var bodystream =   new Buffer(req.body.photo,'base64'); 
     var uniqueRefno =  randnum.uniqueNumber();
-    fs.writeFile("public/images/uploads/"+uniqueRefno+".jpg", new Buffer(req.body.photo, 'base64')  , function(err,done) {
+    var params = {
+         ACL: 'public-read',    
+        'Bucket': S3_BUCKET,
+        'Key': uniqueRefno+'.jpg',
+        'Body': bodystream,
+        'ContentEncoding': 'base64', 
+     };
+
+     s3.upload(params,function(err,done) {
      if(err)
      {
         
@@ -88,7 +118,7 @@ router.route('/edit')
                  gender:req.body.Gender,
                  advmoney:req.body.Advmoney,
                  location:req.body.Location,
-                 imgpath : "/images/uploads/"+uniqueRefno+".jpg"
+                 imgpath : "http://s3.amazonaws.com/mieteapp-123"+uniqueRefno+".jpg"
          }
          var query ={uniqueId:req.body.uid}
          bookSchema.update(query,{$set:newData},{new:false},function(err,result){
