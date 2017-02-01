@@ -53,7 +53,7 @@ router.route('/')
                  newBook.gender=req.body.Gender;
                  newBook.advmoney=req.body.Advmoney;
                  newBook.location=req.body.Location;
-                 newBook.imgpath = "http://s3.amazonaws.com/mieteapp-123"+uniqueRefno+".jpg";
+                 newBook.imgpath = "https://s3.amazonaws.com/mieteapp-123"+uniqueRefno+".jpg";
                  newBook.save(function (err, result) {
                   if (err) {
                              console.log("Error in insert " + JSON.stringify(err));
@@ -118,7 +118,7 @@ router.route('/edit')
                  gender:req.body.Gender,
                  advmoney:req.body.Advmoney,
                  location:req.body.Location,
-                 imgpath : "http://s3.amazonaws.com/mieteapp-123"+uniqueRefno+".jpg"
+                 imgpath : "https://s3.amazonaws.com/mieteapp-123"+uniqueRefno+".jpg"
          }
          var query ={uniqueId:req.body.uid}
          bookSchema.update(query,{$set:newData},{new:false},function(err,result){
