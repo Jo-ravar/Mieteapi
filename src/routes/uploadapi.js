@@ -14,7 +14,7 @@ AWS.config.secretAccessKey = "tp4JjBQNl01w+6FStJU1PHIKSI7RpofyqMelmm3x";
 
  
 
-router.route('/')
+router.route('/add')
      .post(passport.authenticate('jwt', { session: false }),function(req,res){
          
          var s3 = new AWS.S3();
