@@ -44,7 +44,7 @@ router.route('/login')
       }else{
       var payload = {id: user._id};
        var token = jwt.sign(payload, config.secret,{
-            expiresIn: 10080 // in seconds
+            expiresIn: 2592000 // in seconds
           });
           res.json({ success: true, token: 'JWT ' + token });
       } }} });
