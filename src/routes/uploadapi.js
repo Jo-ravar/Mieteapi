@@ -2,6 +2,7 @@ var router = require('express').Router();
 var bookSchema = require('../models/model');
 var userProductSchema = require('../models/userProduct')
 var randnum=require('../utilities/randomnum');
+var Config=require('../utilities/config');
 var mongoose = require('mongoose');
 var fs = require("fs");
 var shortid = require('shortid');
@@ -9,10 +10,8 @@ var passport = require('passport');
 var AWS=require('aws-sdk');
 var S3_BUCKET='mieteapp-123';
 AWS.config = new AWS.Config();
-AWS.config.accessKeyId = "AKIAISDNWLMQT4UKNLDA";
-AWS.config.secretAccessKey = "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";
-
- 
+AWS.config.accessKeyId = Config.id;
+AWS.config.secretAccessKey = Config.secretKey; 
 
 router.route('/')
      .post(passport.authenticate('jwt', { session: false }),function(req,res){
